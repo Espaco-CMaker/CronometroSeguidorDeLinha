@@ -29,7 +29,6 @@ unsigned long timer_mil = millis();
 unsigned long timer_mil2 = millis();
 bool stop_count = false;
 bool start_count = false;
-bool last_lap = false;
 bool fim = false;
 int conta_volta = 0;
 
@@ -166,7 +165,7 @@ void le_sensores(){
       bip(buzzer_count,buzzer_duration);
     }
     //start segunda volta
-    if(conta_volta == 1 && start_count && !digitalRead(STOP_SENSOR) && ((seg%60)%10)>0){
+    if(conta_volta == 1 && start_count && !digitalRead(STOP_SENSOR)){
       conta_volta++; //conta numero de voltas
       seg1 = seg;
       timer_mil2 = timer_mil;
@@ -176,7 +175,7 @@ void le_sensores(){
   }
   //para contagem, sensor stop
   if(!digitalRead(STOP_SENSOR)){
-    if(conta_volta == 1 && start_count && !digitalRead(STOP_SENSOR) && ((seg%60)%10)>0){
+    if(conta_volta == 1 && start_count && !digitalRead(STOP_SENSOR)){
       conta_volta++; //conta numero de voltas
       seg1 = seg;
       timer_mil2 = timer_mil;
