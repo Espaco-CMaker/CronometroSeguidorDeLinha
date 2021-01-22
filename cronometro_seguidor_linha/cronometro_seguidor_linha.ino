@@ -1,9 +1,3 @@
-/*
- * ATENCAO: START_SENSOR E STOP_SENSOR FORAM SIMULADOS COM BOTÃO,
- * PARA USO COM SENSOR IR DEVE SE ALTERAR AS LINHAS (42, 43 -> INPUT) E (156, 178 -> RETIRAR O !)
- */
-
-
 #include <LiquidCrystal_I2C.h>
 #include <Wire.h>
 
@@ -12,9 +6,8 @@
 #define STOP_SENSOR 12      //sensor stop
 #define VOLTAS 2            //variavel de definicao de numeros de volta
 #define BUZZER 8            //pino buzzer
+#define VERSAO "2.0"        //versao software
 
-//0x3F (modulo Luis)
-//0x27 (default)
 LiquidCrystal_I2C lcd(0x3F, 16, 2); // modulo para lcd 
 
 int seg = 0;
@@ -38,12 +31,11 @@ int conta_volta = 0;
 void setup() {
 
   pinMode (RESET, INPUT_PULLUP); 
-  pinMode (START_SENSOR, INPUT_PULLUP); 
-  pinMode (STOP_SENSOR, INPUT_PULLUP); 
+  pinMode (START_SENSOR, INPUT); 
+  pinMode (STOP_SENSOR, INPUT); 
   pinMode (BUZZER, OUTPUT); 
   
-  //lcd.begin(16, 2); // lcd default
-  lcd.init(); //modulo Luis
+  lcd.init();
   lcd.setBacklight(HIGH);
 
   lcd.setCursor(0, 0);
@@ -56,7 +48,7 @@ void setup() {
   lcd.setCursor(0, 0);
   lcd.print(" Espaco CMaker" );
   lcd.setCursor(0, 1);
-  lcd.print("   Versao 1.0   " );  
+  lcd.print("   Versao " VERSAO);  
   delay(2000);
   lcd.clear();
   lcd.setCursor(0, 0);
@@ -197,7 +189,7 @@ void le_sensores(){
     }
   }
   //botao reset, zera o tempo e variaveis auxiliares
-  if (!digitalRead(RESET)==1 && fim && conta_volta > 0){
+  if (!digitalRead(RESET)==1){
     stop_count = false;
     start_count = false;
     fim = false;
